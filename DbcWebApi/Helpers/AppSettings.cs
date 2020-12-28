@@ -1,4 +1,4 @@
-namespace WebApi.Helpers
+namespace DbcWebApi.Helpers
 {
     public class AppSettings
     {

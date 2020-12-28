@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
 
-namespace WebApi.Helpers
+namespace DbcWebApi.Helpers
 {
     public class AppException : Exception
     {

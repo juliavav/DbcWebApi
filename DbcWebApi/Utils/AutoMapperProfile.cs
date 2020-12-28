@@ -15,7 +15,8 @@ namespace DbcWebApi.Utils
 
             CreateMap<Dog, DogModel>();
             CreateMap<AddDogModel, Dog>();
-            CreateMap<Dog, DogForSaleModel>();
+            CreateMap<Dog, DogForSaleModel>().ForMember(item=> item.OwnerName, 
+                opt => opt.MapFrom(src=> src.Owner.FirstName));
         }
     }
 }

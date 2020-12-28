@@ -7,6 +7,7 @@ using DbcWebApi.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using AutoMapper;
+using DbcWebApi.Helpers;
 using DbcWebApi.Repositories.Implementation;
 using DbcWebApi.Repositories.Interfaces;
 using DbcWebApi.Services.Implementation;
@@ -21,7 +22,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using WebApi.Helpers;
 
 namespace DbcWebApi
 {
@@ -105,12 +105,15 @@ namespace DbcWebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DbcWebApi v1"));
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

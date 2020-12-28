@@ -7,7 +7,6 @@ using DbcWebApi.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using WebApi.Helpers;
 
 namespace DbcWebApi.Controllers
 {
@@ -33,7 +32,7 @@ namespace DbcWebApi.Controllers
             return Ok(model);
         }
         
-        [HttpGet("forSale")]
+        [HttpGet("listForSale")]
         public async Task<IActionResult> GetDogsForSale()
         {
             var dogs = await dogRepository.GetAllDogsForSaleAsync();
@@ -42,7 +41,7 @@ namespace DbcWebApi.Controllers
         }
         
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteDog(int id)
         {
             await dogRepository.DeleteDog(id);
@@ -50,16 +49,16 @@ namespace DbcWebApi.Controllers
         }
         
         [Authorize]
-        [HttpPost("update")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateDog([FromBody] UpdateDogModel dogModel)
         {
-            await dogRepository.UpdateDogSaleStatusAsync(dogModel.Id, dogModel.Price);
+            await dogRepository.UpdateDogSaleStatusAsync(dogModel.Id,dogModel.IsForSale, dogModel.Price);
             return Ok();
         }
         
         [Authorize]
         [HttpPost("add")]
-        public async Task<IActionResult> UpdateDog([FromBody] AddDogModel dogModel)
+        public async Task<IActionResult> AddDog([FromBody] AddDogModel dogModel)
         {
             var userId = int.Parse(User.Identity.Name);
             var dog = mapper.Map<Dog>(dogModel);

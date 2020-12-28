@@ -35,11 +35,11 @@ namespace DbcWebApi.Repositories.Implementation
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateDogSaleStatusAsync(int dogId, int cost)
+        public async Task UpdateDogSaleStatusAsync(int dogId, bool isForSale, int cost)
         {
             var dog = await context.Dogs.FindAsync(dogId);
             dog.Price = cost;
-            dog.IsForSale = true;
+            dog.IsForSale = isForSale;
             await context.SaveChangesAsync();
         }
 
